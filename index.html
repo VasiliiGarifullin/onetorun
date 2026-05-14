@@ -7,24 +7,33 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,900;1,900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Montserrat', sans-serif; background-color: black; }
+        body { font-family: 'Montserrat', sans-serif; background-color: black; color: white; }
         .brand-yellow { color: #e6c619; }
         .bg-brand-yellow { background-color: #e6c619; }
         .selection-yellow::selection { background: #e6c619; color: black; }
+        
         #lang-menu { display: none; }
         #lang-menu.show { display: block; }
+        
         .coach-photo-filter { filter: grayscale(100%); transition: filter 0.5s ease; }
         .coach-photo-filter:hover { filter: grayscale(0%); }
-        
-        /* Улучшенная отзывчивость меню */
+
+        /* Исправление работы меню */
         #mobile-menu.active {
             opacity: 1 !important;
-            pointer-events: auto !important;
             visibility: visible !important;
+            pointer-events: auto !important;
+        }
+
+        #navbar {
+            pointer-events: none; /* Пропускает клики сквозь прозрачную панель */
+        }
+        #navbar .max-w-7xl, #lang-menu, #menu-btn {
+            pointer-events: auto; /* Но разрешает клики по элементам управления */
         }
     </style>
 </head>
-<body class="bg-black text-white selection-yellow">
+<body class="bg-black selection-yellow">
 
     <nav id="navbar" class="fixed w-full z- transition-all duration-300 bg-transparent py-6">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
@@ -51,7 +60,7 @@
                 </div>
             </div>
 
-            <button class="md:hidden p-2 relative" id="menu-btn" aria-label="Toggle menu">
+            <button class="md:hidden p-2 relative z-" id="menu-btn" aria-label="Toggle menu">
                 <svg id="burger-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/>
                 </svg>
@@ -73,9 +82,9 @@
         </div>
     </div>
 
-    <section class="relative h-screen flex items-center justify-center overflow-hidden bg-black">
+    <section class="relative h-screen flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0 z-0">
-            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent z-10"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10"></div>
             <img src="img/background.png" class="w-full h-full object-cover grayscale opacity-30" alt="" />
         </div>
         <div class="relative z-20 max-w-5xl mx-auto px-6 text-center">
@@ -194,13 +203,13 @@
                 "spec-title": "Специализация", "spec-text": "Подготовка бегунов на средние и длинные дистанции.",
                 "loc-label": "Локация", "loc-online": "Онлайн по всему миру", "loc-offline": "Оффлайн - Нови-Сад, Сербия",
                 "principles-title": "Принципы тренировок", 
-                "p1-title": "Индивидуальный подход", "p1-text": "Учитываю сильные и слабые стороны каждого бегуна, природные предрасположенности и личные интересы.",
+                "p1-title": "Индивидуальный подход", "p1-text": "Я учитываю сильные и слабые стороны каждого бегуна, природные предрасположенности и личные интересы.",
                 "p2-title": "Персональный план", "p2-text": "Тренировочная нагрузка индивидуальна и корректируется в соответствии с целями. Поддержка через регулярные консультации.",
                 "p3-title": "Долгосрочный рост", "p3-text": "Тренировочный процесс строится прогрессивно и систематично, без форсирования результатов.",
                 "pricing-title": "Цены", "price-personal": "Персональная тренировка / Консультация: 20 €",
                 "plan1-name": "Групповые тренировки", "plan1-feat1": "• Тренировки на стадионе", "plan1-feat2": "• 2–3 занятия в неделю",
                 "plan2-name": "Онлайн-ведение", "plan2-tag": "Самый популярный",
-                "plan3-name": "Онлайн + Группы", "plan3-tag": "Полное погружение",
+                "plan3-name": "Онлайн + Группы", "plan3-tag": "Максимальный опыт",
                 "footer-text": "© 2026 Василий Гарифуллин. Тренер по бегу."
             },
             sr: {
@@ -221,6 +230,31 @@
             }
         };
 
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const body = document.body;
+
+        function toggleMenu(e) {
+            if(e) e.preventDefault();
+            const isActive = mobileMenu.classList.contains('active');
+            if (!isActive) {
+                mobileMenu.classList.add('active');
+                body.style.overflow = 'hidden';
+                menuBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>';
+            } else {
+                closeMobileMenu();
+            }
+        }
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('active');
+            body.style.overflow = '';
+            menuBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>';
+        }
+
+        menuBtn.addEventListener('click', toggleMenu);
+        document.querySelectorAll('.mobile-link').forEach(link => link.addEventListener('click', closeMobileMenu));
+
         function changeLang(lang) {
             const currentLangEl = document.getElementById('current-lang');
             if (currentLangEl) currentLangEl.textContent = lang.toUpperCase();
@@ -234,41 +268,13 @@
             closeMobileMenu();
         }
 
-        const menuBtn = document.getElementById('menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const body = document.body;
-
-        // Оптимизированная функция переключения
-        function toggleMenu(e) {
-            if(e) e.stopPropagation();
-            const isActive = mobileMenu.classList.contains('active');
-            if (!isActive) {
-                mobileMenu.classList.add('active');
-                mobileMenu.classList.remove('opacity-0', 'pointer-events-none', 'invisible');
-                body.style.overflow = 'hidden';
-                // Меняем иконку на крестик
-                menuBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>';
-            } else {
-                closeMobileMenu();
-            }
-        }
-
-        function closeMobileMenu() {
-            mobileMenu.classList.remove('active');
-            mobileMenu.classList.add('opacity-0', 'pointer-events-none', 'invisible');
-            body.style.overflow = '';
-            menuBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>';
-        }
-
-        menuBtn.addEventListener('click', toggleMenu);
-        document.querySelectorAll('.mobile-link').forEach(link => link.addEventListener('click', closeMobileMenu));
-
         window.onload = () => { changeLang(localStorage.getItem('preferred-lang') || 'en'); };
         
         window.onscroll = () => {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 50) {
                 nav.classList.add('bg-black/95', 'backdrop-blur-md', 'py-4', 'border-b', 'border-white/10');
+                nav.style.pointerEvents = "auto";
             } else {
                 nav.classList.remove('bg-black/95', 'backdrop-blur-md', 'py-4', 'border-b', 'border-white/10');
             }
