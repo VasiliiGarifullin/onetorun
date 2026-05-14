@@ -15,69 +15,78 @@
         #lang-menu { display: none; }
         #lang-menu.show { display: block; }
         
-        .coach-photo-filter { filter: grayscale(100%); transition: filter 0.5s ease; }
-        .coach-photo-filter:hover { filter: grayscale(0%); }
+        /* Плавные переходы для фото */
+        .coach-photo-filter { filter: grayscale(100%); transition: all 0.5s ease; }
+        .coach-photo-filter:hover { filter: grayscale(0%); transform: scale(1.02); }
 
-        /* Исправление работы меню */
+        /* Состояния мобильного меню */
+        #mobile-menu {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
         #mobile-menu.active {
             opacity: 1 !important;
             visibility: visible !important;
             pointer-events: auto !important;
         }
 
-        #navbar {
-            pointer-events: none; /* Пропускает клики сквозь прозрачную панель */
-        }
-        #navbar .max-w-7xl, #lang-menu, #menu-btn {
-            pointer-events: auto; /* Но разрешает клики по элементам управления */
+        /* Навигация */
+        .nav-scrolled {
+            background-color: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(15px);
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(230, 198, 25, 0.2);
         }
     </style>
 </head>
 <body class="bg-black selection-yellow">
 
-    <nav id="navbar" class="fixed w-full z- transition-all duration-300 bg-transparent py-6">
+    <nav id="navbar" class="fixed top-0 left-0 w-full z- transition-all duration-500 py-6 isolate">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-            <div class="flex items-center gap-3">
+            <a href="#" class="flex items-center gap-3">
                 <img src="img/logo.png" alt="ONETORUN" class="h-10 w-auto">
-            </div>
+            </a>
             
             <div class="hidden md:flex gap-8 text-[10px] font-black items-center uppercase tracking-[0.3em]">
-                <a href="#about" data-i18n="nav-coach"></a>
-                <a href="#principles" data-i18n="nav-principles"></a>
-                <a href="#pricing" data-i18n="nav-pricing"></a>
-                <a href="#contact" data-i18n="nav-contacts"></a>
+                <a href="#about" data-i18n="nav-coach" class="hover:text-[#e6c619] transition-colors"></a>
+                <a href="#principles" data-i18n="nav-principles" class="hover:text-[#e6c619] transition-colors"></a>
+                <a href="#pricing" data-i18n="nav-pricing" class="hover:text-[#e6c619] transition-colors"></a>
+                <a href="#contact" data-i18n="nav-contacts" class="hover:text-[#e6c619] transition-colors"></a>
                 
-                <div class="relative group">
+                <div class="relative">
                     <button id="lang-btn" class="flex items-center gap-1 border border-white/20 px-3 py-1 rounded-full hover:border-[#e6c619] transition-all uppercase text-[10px] font-black">
                         <span id="current-lang">EN</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                     </button>
-                    <div id="lang-menu" class="absolute right-0 mt-2 w-20 bg-black/90 border border-white/10 rounded-xl overflow-hidden backdrop-blur-md">
-                        <button onclick="changeLang('en')" class="w-full px-4 py-2 text-left hover:bg-brand-yellow hover:text-black transition-colors border-b border-white/5 text-[10px] font-black">EN</button>
-                        <button onclick="changeLang('ru')" class="w-full px-4 py-2 text-left hover:bg-brand-yellow hover:text-black transition-colors border-b border-white/5 text-[10px] font-black">RU</button>
-                        <button onclick="changeLang('sr')" class="w-full px-4 py-2 text-left hover:bg-brand-yellow hover:text-black transition-colors text-[10px] font-black">SR</button>
+                    <div id="lang-menu" class="absolute right-0 mt-3 w-24 bg-black border border-white/10 rounded-xl overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.8)]">
+                        <button onclick="changeLang('en')" class="w-full px-4 py-3 text-left hover:bg-brand-yellow hover:text-black transition-colors border-b border-white/5 text-[10px] font-black">EN</button>
+                        <button onclick="changeLang('ru')" class="w-full px-4 py-3 text-left hover:bg-brand-yellow hover:text-black transition-colors border-b border-white/5 text-[10px] font-black">RU</button>
+                        <button onclick="changeLang('sr')" class="w-full px-4 py-3 text-left hover:bg-brand-yellow hover:text-black transition-colors text-[10px] font-black">SR</button>
                     </div>
                 </div>
             </div>
 
-            <button class="md:hidden p-2 relative z-" id="menu-btn" aria-label="Toggle menu">
-                <svg id="burger-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/>
-                </svg>
+            <button class="md:hidden p-2 relative z- transition-transform active:scale-90" id="menu-btn">
+                <div id="burger-icon-container">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/>
+                    </svg>
+                </div>
             </button>
         </div>
     </nav>
 
-    <div id="mobile-menu" class="fixed inset-0 z- bg-black flex flex-col items-center justify-center md:hidden transition-all duration-300 opacity-0 pointer-events-none invisible">
+    <div id="mobile-menu" class="fixed inset-0 z- bg-black flex flex-col items-center justify-center md:hidden opacity-0 pointer-events-none invisible">
         <div class="flex flex-col items-center gap-10 text-3xl font-black uppercase italic tracking-widest">
-            <a href="#about" data-i18n="nav-coach" class="mobile-link hover:text-[#e6c619]"></a>
-            <a href="#principles" data-i18n="nav-principles" class="mobile-link hover:text-[#e6c619]"></a>
-            <a href="#pricing" data-i18n="nav-pricing" class="mobile-link hover:text-[#e6c619]"></a>
-            <a href="#contact" data-i18n="nav-contacts" class="mobile-link hover:text-[#e6c619]"></a>
+            <a href="#about" data-i18n="nav-coach" class="mobile-link hover:text-[#e6c619] transition-colors"></a>
+            <a href="#principles" data-i18n="nav-principles" class="mobile-link hover:text-[#e6c619] transition-colors"></a>
+            <a href="#pricing" data-i18n="nav-pricing" class="mobile-link hover:text-[#e6c619] transition-colors"></a>
+            <a href="#contact" data-i18n="nav-contacts" class="mobile-link hover:text-[#e6c619] transition-colors"></a>
+            
             <div class="flex gap-4 mt-10 border-t border-white/10 pt-10">
-                <button onclick="changeLang('en')" class="px-4 py-2 border border-white/20 rounded-full text-sm">EN</button>
-                <button onclick="changeLang('ru')" class="px-4 py-2 border border-white/20 rounded-full text-sm">RU</button>
-                <button onclick="changeLang('sr')" class="px-4 py-2 border border-white/20 rounded-full text-sm">SR</button>
+                <button onclick="changeLang('en')" class="px-5 py-2 border border-white/20 rounded-full text-xs font-black">EN</button>
+                <button onclick="changeLang('ru')" class="px-5 py-2 border border-white/20 rounded-full text-xs font-black">RU</button>
+                <button onclick="changeLang('sr')" class="px-5 py-2 border border-white/20 rounded-full text-xs font-black">SR</button>
             </div>
         </div>
     </div>
@@ -85,7 +94,7 @@
     <section class="relative h-screen flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0 z-0">
             <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10"></div>
-            <img src="img/background.png" class="w-full h-full object-cover grayscale opacity-30" alt="" />
+            <img src="img/background.png" class="w-full h-full object-cover grayscale opacity-40" alt="bg" />
         </div>
         <div class="relative z-20 max-w-5xl mx-auto px-6 text-center">
             <div class="text-2xl font-black tracking-tighter text-white uppercase italic mb-8">ONE<span class="brand-yellow">TORUN</span></div>
@@ -98,7 +107,7 @@
             <div class="grid lg:grid-cols-2 gap-16 items-start">
                 <div>
                     <div data-i18n="coach-label" class="inline-block px-4 py-1 rounded-full bg-[#e6c619]/10 text-[#e6c619] text-[10px] font-black uppercase tracking-widest mb-6"></div>
-                    <h2 class="text-5xl md:text-7xl font-black mb-8 uppercase italic leading-none">Vasilii <br /> Garifullin</h2>
+                    <h2 class="text-5xl md:text-7xl font-black mb-8 uppercase italic leading-none tracking-tighter">Vasilii <br /> Garifullin</h2>
                     <div class="space-y-6 text-white/70 text-lg font-medium">
                         <p data-i18n="coach-info-1" class="border-l-2 border-[#e6c619] pl-4"></p>
                         <p data-i18n="coach-info-2"></p>
@@ -106,18 +115,23 @@
                         <p data-i18n="coach-info-4"></p>
                     </div>
                     <div class="bg-white/5 p-10 rounded-[3rem] border border-white/10 mt-12">
-                        <h3 data-i18n="spec-title" class="text-3xl font-black uppercase italic mb-8"></h3>
+                        <h3 data-i18n="spec-title" class="text-3xl font-black uppercase italic mb-8 tracking-tighter"></h3>
                         <p data-i18n="spec-text" class="text-white/60 mb-8 leading-relaxed text-xl"></p>
-                        <div class="space-y-4">
-                            <h4 data-i18n="loc-label" class="text-xs font-black uppercase tracking-[0.3em] text-white/40"></h4>
-                            <p data-i18n="loc-online" class="font-bold text-xl uppercase italic"></p>
-                            <p data-i18n="loc-offline" class="font-bold text-xl uppercase italic brand-yellow"></p>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <h4 data-i18n="loc-label" class="text-[10px] font-black uppercase tracking-[0.3em] text-white/40 mb-2"></h4>
+                                <p data-i18n="loc-online" class="font-bold text-sm uppercase italic"></p>
+                            </div>
+                            <div>
+                                <h4 class="text-[10px] font-black uppercase tracking-[0.3em] text-white/40 mb-2 invisible">.</h4>
+                                <p data-i18n="loc-offline" class="font-bold text-sm uppercase italic brand-yellow"></p>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="sticky top-24">
-                    <div class="w-full aspect-[4/5.6] rounded-[3rem] overflow-hidden bg-black border-4 border-transparent hover:border-[#e6c619] transition-all duration-500 coach-photo-filter relative">
-                        <img src="img/coach_1.png" class="absolute w-full h-full object-cover" alt="Vasilii Garifullin">
+                    <div class="w-full aspect-[4/5.6] rounded-[3rem] overflow-hidden bg-white/5 border border-white/10 coach-photo-filter relative">
+                        <img src="img/coach_1.png" class="absolute inset-0 w-full h-full object-cover" alt="Vasilii">
                     </div>
                 </div>
             </div>
@@ -126,19 +140,19 @@
 
     <section id="principles" class="py-32 bg-white text-black">
         <div class="max-w-7xl mx-auto px-6">
-            <h2 data-i18n="principles-title" class="text-5xl md:text-7xl font-black uppercase italic mb-20 tracking-tighter"></h2>
-            <div class="grid md:grid-cols-3 gap-12">
-                <div class="p-8 bg-black/5 rounded-3xl">
-                    <h4 data-i18n="p1-title" class="text-2xl font-black uppercase italic mb-4"></h4>
-                    <p data-i18n="p1-text" class="font-bold opacity-70"></p>
+            <h2 data-i18n="principles-title" class="text-5xl md:text-7xl font-black uppercase italic mb-20 tracking-tighter leading-none"></h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="p-10 bg-black/5 rounded-[2.5rem] border border-black/5">
+                    <h4 data-i18n="p1-title" class="text-2xl font-black uppercase italic mb-4 tracking-tighter"></h4>
+                    <p data-i18n="p1-text" class="font-bold opacity-70 leading-relaxed"></p>
                 </div>
-                <div class="p-8 bg-black/5 rounded-3xl">
-                    <h4 data-i18n="p2-title" class="text-2xl font-black uppercase italic mb-4"></h4>
-                    <p data-i18n="p2-text" class="font-bold opacity-70"></p>
+                <div class="p-10 bg-black/5 rounded-[2.5rem] border border-black/5">
+                    <h4 data-i18n="p2-title" class="text-2xl font-black uppercase italic mb-4 tracking-tighter"></h4>
+                    <p data-i18n="p2-text" class="font-bold opacity-70 leading-relaxed"></p>
                 </div>
-                <div class="p-8 bg-black/5 rounded-3xl">
-                    <h4 data-i18n="p3-title" class="text-2xl font-black uppercase italic mb-4"></h4>
-                    <p data-i18n="p3-text" class="font-bold opacity-70"></p>
+                <div class="p-10 bg-black/5 rounded-[2.5rem] border border-black/5">
+                    <h4 data-i18n="p3-title" class="text-2xl font-black uppercase italic mb-4 tracking-tighter"></h4>
+                    <p data-i18n="p3-text" class="font-bold opacity-70 leading-relaxed"></p>
                 </div>
             </div>
         </div>
@@ -146,35 +160,37 @@
 
     <section id="pricing" class="py-32 bg-black">
         <div class="max-w-7xl mx-auto px-6 text-center">
-            <h2 data-i18n="pricing-title" class="text-5xl md:text-7xl font-black uppercase italic mb-6"></h2>
-            <div class="inline-block px-6 py-2 bg-white/5 border border-white/10 rounded-full text-[#e6c619] text-sm font-black uppercase italic mb-24">
+            <h2 data-i18n="pricing-title" class="text-5xl md:text-7xl font-black uppercase italic mb-6 tracking-tighter"></h2>
+            <div class="inline-block px-6 py-2 bg-white/5 border border-white/10 rounded-full text-[#e6c619] text-[10px] font-black uppercase italic mb-24 tracking-widest">
                 <span data-i18n="price-personal"></span>
             </div>
-            <div class="grid lg:grid-cols-3 gap-8">
-                <div class="p-10 rounded-[3rem] border border-white/10 bg-white/5">
-                    <h3 data-i18n="plan1-name" class="text-2xl font-black uppercase italic mb-2"></h3>
-                    <div class="text-6xl font-black mb-8">50 €</div>
-                    <ul class="text-[10px] font-black uppercase text-white/50 space-y-2">
+            <div class="grid lg:grid-cols-3 gap-8 items-center">
+                <div class="p-12 rounded-[3rem] border border-white/10 bg-white/5 hover:border-white/20 transition-colors">
+                    <h3 data-i18n="plan1-name" class="text-xl font-black uppercase italic mb-2 tracking-tighter text-white/40"></h3>
+                    <div class="text-6xl font-black mb-8 italic tracking-tighter">50 €</div>
+                    <ul class="text-[10px] font-black uppercase text-white/50 space-y-4 text-left border-t border-white/5 pt-8">
                         <li data-i18n="plan1-feat1"></li>
                         <li data-i18n="plan1-feat2"></li>
                     </ul>
                 </div>
-                <div class="p-10 rounded-[3rem] bg-brand-yellow text-black scale-105">
-                    <h3 data-i18n="plan2-name" class="text-2xl font-black uppercase italic mb-2"></h3>
-                    <div class="text-6xl font-black mb-8">70 €</div>
-                    <p data-i18n="plan2-tag" class="text-[10px] font-black uppercase italic"></p>
+                <div class="p-14 rounded-[3.5rem] bg-brand-yellow text-black scale-105 shadow-[0_20px_80px_rgba(230,198,25,0.2)]">
+                    <h3 data-i18n="plan2-name" class="text-2xl font-black uppercase italic mb-2 tracking-tighter"></h3>
+                    <div class="text-7xl font-black mb-8 italic tracking-tighter">70 €</div>
+                    <p data-i18n="plan2-tag" class="text-[10px] font-black uppercase italic tracking-widest bg-black text-white py-2 px-4 rounded-full inline-block"></p>
                 </div>
-                <div class="p-10 rounded-[3rem] border border-white/10 bg-white/5">
-                    <h3 data-i18n="plan3-name" class="text-2xl font-black uppercase italic mb-2"></h3>
-                    <div class="text-6xl font-black mb-8">100 €</div>
-                    <p data-i18n="plan3-tag" class="text-[10px] font-black uppercase text-white/50 italic"></p>
+                <div class="p-12 rounded-[3rem] border border-white/10 bg-white/5">
+                    <h3 data-i18n="plan3-name" class="text-xl font-black uppercase italic mb-2 tracking-tighter text-white/40"></h3>
+                    <div class="text-6xl font-black mb-8 italic tracking-tighter">100 €</div>
+                    <p data-i18n="plan3-tag" class="text-[10px] font-black uppercase text-white/50 italic tracking-widest"></p>
                 </div>
             </div>
         </div>
     </section>
 
     <footer id="contact" class="py-32 border-t border-white/5 text-center">
-        <div class="text-6xl font-black italic uppercase mb-12">ONE<span class="brand-yellow">TORUN</span></div>
+        <div class="text-6xl font-black italic uppercase mb-12 tracking-tighter">ONE<span class="brand-yellow">TORUN</span></div>
+        <div class="flex justify-center gap-8 mb-12 opacity-50">
+            </div>
         <p data-i18n="footer-text" class="text-white/20 text-[10px] font-black uppercase tracking-[0.5em]"></p>
     </footer>
 
@@ -183,64 +199,70 @@
             en: {
                 "nav-coach": "Coach", "nav-principles": "Principles", "nav-pricing": "Pricing", "nav-contacts": "Contacts",
                 "hero-title": "RUNNING AS A <br /> <span class='brand-yellow'>WAY OF LIFE</span>",
-                "coach-label": "Coach", "coach-info-1": "Certified running coach.", "coach-info-2": "Coaching experience — 3 years.", "coach-info-3": "Over 17 years of running experience.", "coach-info-4": "Candidate Master of Sport in Athletics.",
-                "spec-title": "Specialization", "spec-text": "Preparing runners for middle- and long-distance races.",
+                "coach-label": "Professional Coach", "coach-info-1": "Certified running coach.", "coach-info-2": "Coaching experience — 3 years.", "coach-info-3": "Over 17 years of running experience.", "coach-info-4": "Candidate Master of Sport in Athletics.",
+                "spec-title": "Specialization", "spec-text": "Preparing runners for middle- and long-distance races, improving biomechanics and performance.",
                 "loc-label": "Location", "loc-online": "Worldwide Online", "loc-offline": "Offline - Novi Sad, Serbia",
                 "principles-title": "Coaching Principles", 
-                "p1-title": "Individual Approach", "p1-text": "I take into account each runner’s strengths and weaknesses, natural predispositions, and personal interests.",
-                "p2-title": "Personalized Support", "p2-text": "Training load is individualized and adjusted according to goals. Support through regular consultations.",
-                "p3-title": "Long-Term Growth", "p3-text": "Training is built progressively and systematically without forcing results.",
-                "pricing-title": "Pricing", "price-personal": "Personal Training / Consultation: 20 €",
-                "plan1-name": "Group Training", "plan1-feat1": "• Stadium sessions", "plan1-feat2": "• 2–3 training sessions per week",
+                "p1-title": "Individual Approach", "p1-text": "I take into account each runner’s strengths and weaknesses, natural predispositions, and personal goals.",
+                "p2-title": "Adaptive Load", "p2-text": "Training load is adjusted in real-time according to your state and progress. Constant feedback loop.",
+                "p3-title": "Consistency", "p3-text": "Training is built progressively and systematically to ensure long-term health and performance.",
+                "pricing-title": "Plans & Pricing", "price-personal": "Personal Training / Consultation: 20 €",
+                "plan1-name": "Group Training", "plan1-feat1": "• Stadium sessions in Novi Sad", "plan1-feat2": "• 2–3 training sessions per week",
                 "plan2-name": "Online Coaching", "plan2-tag": "Most Popular",
-                "plan3-name": "Online + Group", "plan3-tag": "Full Experience",
-                "footer-text": "© 2026 Vasilii Garifullin. Running Coach."
+                "plan3-name": "Online + Group", "plan3-tag": "The Full Experience",
+                "footer-text": "© 2026 Vasilii Garifullin. All rights reserved."
             },
             ru: {
                 "nav-coach": "Тренер", "nav-principles": "Принципы", "nav-pricing": "Цены", "nav-contacts": "Контакты",
                 "hero-title": "БЕГ КАК <br /> <span class='brand-yellow'>ОБРАЗ ЖИЗНИ</span>",
-                "coach-label": "Тренер", "coach-info-1": "Сертифицированный тренер по бегу.", "coach-info-2": "Тренерский стаж — 3 года.", "coach-info-3": "Более 17 лет личного бегового опыта.", "coach-info-4": "Кандидат в мастера спорта по легкой атлетике.",
-                "spec-title": "Специализация", "spec-text": "Подготовка бегунов на средние и длинные дистанции.",
+                "coach-label": "Профессиональный Тренер", "coach-info-1": "Сертифицированный тренер по бегу.", "coach-info-2": "Тренерский стаж — 3 года.", "coach-info-3": "Более 17 лет личного бегового опыта.", "coach-info-4": "Кандидат в мастера спорта по легкой атлетике.",
+                "spec-title": "Специализация", "spec-text": "Подготовка бегунов на средние и длинные дистанции, работа над биомеханикой.",
                 "loc-label": "Локация", "loc-online": "Онлайн по всему миру", "loc-offline": "Оффлайн - Нови-Сад, Сербия",
                 "principles-title": "Принципы тренировок", 
-                "p1-title": "Индивидуальный подход", "p1-text": "Я учитываю сильные и слабые стороны каждого бегуна, природные предрасположенности и личные интересы.",
-                "p2-title": "Персональный план", "p2-text": "Тренировочная нагрузка индивидуальна и корректируется в соответствии с целями. Поддержка через регулярные консультации.",
-                "p3-title": "Долгосрочный рост", "p3-text": "Тренировочный процесс строится прогрессивно и систематично, без форсирования результатов.",
-                "pricing-title": "Цены", "price-personal": "Персональная тренировка / Консультация: 20 €",
+                "p1-title": "Индивидуальный подход", "p1-text": "Я учитываю сильные и слабые стороны каждого бегуна, природные предрасположенности и личные цели.",
+                "p2-title": "Адаптивная нагрузка", "p2-text": "Нагрузка корректируется в реальном времени в зависимости от состояния. Постоянная обратная связь.",
+                "p3-title": "Системность", "p3-text": "Тренировочный процесс строится прогрессивно и систематично, для здоровья и результатов.",
+                "pricing-title": "Тарифы", "price-personal": "Персональная тренировка / Консультация: 20 €",
                 "plan1-name": "Групповые тренировки", "plan1-feat1": "• Тренировки на стадионе", "plan1-feat2": "• 2–3 занятия в неделю",
                 "plan2-name": "Онлайн-ведение", "plan2-tag": "Самый популярный",
-                "plan3-name": "Онлайн + Группы", "plan3-tag": "Максимальный опыт",
-                "footer-text": "© 2026 Василий Гарифуллин. Тренер по бегу."
+                "plan3-name": "Онлайн + Группы", "plan3-tag": "Максимальный результат",
+                "footer-text": "© 2026 Василий Гарифуллин. Все права защищены."
             },
             sr: {
                 "nav-coach": "Trener", "nav-principles": "Principi", "nav-pricing": "Cene", "nav-contacts": "Kontakti",
                 "hero-title": "TRČANJE KAO <br /> <span class='brand-yellow'>NAČIN ŽIVOTA</span>",
-                "coach-label": "Trener", "coach-info-1": "Sertifikovani trener trčanja.", "coach-info-2": "Trenersko iskustvo — 3 godine.", "coach-info-3": "Više od 17 godina trkačkog iskustva.", "coach-info-4": "Kandidat za majstora sporta u atletici.",
-                "spec-title": "Specijalizacija", "spec-text": "Priprema trkača za srednje i duge staze.",
-                "loc-label": "Lokacija", "loc-online": "Online širom sveta", "loc-offline": "Offline - Novi Sad, Srbija",
+                "coach-label": "Profesionalni Trener", "coach-info-1": "Sertifikovani trener trčanja.", "coach-info-2": "Trenersko iskustvo — 3 godine.", "coach-info-3": "Više od 17 godina trkačkog iskustva.", "coach-info-4": "Kandidat za majstora sporta u atletici.",
+                "spec-title": "Specijalizacija", "spec-text": "Priprema trkača za srednje i duge staze, poboljšanje biomehanike i rezultata.",
+                "loc-label": "Lokacija", "loc-online": "Online širom sveta", "loc-offline": "Uživo - Novi Sad, Srbija",
                 "principles-title": "Principi rada", 
-                "p1-title": "Individualni pristup", "p1-text": "Uzimam u obzir snage i slabosti svakog trkača, prirodne predispozicije i lična interesovanja.",
-                "p2-title": "Personalizovana podrška", "p2-text": "Opterećenje je individualizovano i prilagođeno ciljevima. Podrška kroz redovne konsultacije.",
-                "p3-title": "Dugoročni razvoj", "p3-text": "Trening se gradi progresivno i sistematično bez forsiranja rezultata.",
-                "pricing-title": "Cene", "price-personal": "Personalni trening / Konsultacija: 20 €",
+                "p1-title": "Individualni pristup", "p1-text": "Uzimam u obzir snage i slabosti svakog trkača, prirodne predispozicije i lične ciljeve.",
+                "p2-title": "Prilagođeno opterećenje", "p2-text": "Opterećenje se prilagođava u realnom vremenu prema vašem stanju i napretku.",
+                "p3-title": "Doslednost", "p3-text": "Trening se gradi progresivno i sistematično za dugoročno zdravlje i uspeh.",
+                "pricing-title": "Planovi i cene", "price-personal": "Personalni trening / Konsultacija: 20 €",
                 "plan1-name": "Grupni treninzi", "plan1-feat1": "• Treninzi na stadionu", "plan1-feat2": "• 2–3 treninga nedeljno",
                 "plan2-name": "Online vođenje", "plan2-tag": "Najpopularnije",
                 "plan3-name": "Online + Grupa", "plan3-tag": "Potpuno iskustvo",
-                "footer-text": "© 2026 Vasilii Garifullin. Trener trčanja."
+                "footer-text": "© 2026 Vasilii Garifullin. Sva prava zadržana."
             }
         };
 
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const body = document.body;
+        const langBtn = document.getElementById('lang-btn');
+        const langMenu = document.getElementById('lang-menu');
+        const burgerIconContainer = document.getElementById('burger-icon-container');
 
-        function toggleMenu(e) {
-            if(e) e.preventDefault();
+        // Иконки (Крестик и Бургер)
+        const burgerSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>`;
+        const closeSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>`;
+
+        function toggleMenu() {
             const isActive = mobileMenu.classList.contains('active');
             if (!isActive) {
                 mobileMenu.classList.add('active');
                 body.style.overflow = 'hidden';
-                menuBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>';
+                burgerIconContainer.innerHTML = closeSVG;
             } else {
                 closeMobileMenu();
             }
@@ -249,15 +271,11 @@
         function closeMobileMenu() {
             mobileMenu.classList.remove('active');
             body.style.overflow = '';
-            menuBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>';
+            burgerIconContainer.innerHTML = burgerSVG;
         }
 
-        menuBtn.addEventListener('click', toggleMenu);
-        document.querySelectorAll('.mobile-link').forEach(link => link.addEventListener('click', closeMobileMenu));
-
         function changeLang(lang) {
-            const currentLangEl = document.getElementById('current-lang');
-            if (currentLangEl) currentLangEl.textContent = lang.toUpperCase();
+            document.getElementById('current-lang').textContent = lang.toUpperCase();
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (translations[lang] && translations[lang][key]) {
@@ -266,29 +284,41 @@
             });
             localStorage.setItem('preferred-lang', lang);
             closeMobileMenu();
+            langMenu.classList.remove('show');
         }
 
-        window.onload = () => { changeLang(localStorage.getItem('preferred-lang') || 'en'); };
-        
+        // Event Listeners
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleMenu();
+        });
+
+        langBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langMenu.classList.toggle('show');
+        });
+
+        document.addEventListener('click', () => {
+            langMenu.classList.remove('show');
+        });
+
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+
         window.onscroll = () => {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 50) {
-                nav.classList.add('bg-black/95', 'backdrop-blur-md', 'py-4', 'border-b', 'border-white/10');
-                nav.style.pointerEvents = "auto";
+                nav.classList.add('nav-scrolled');
             } else {
-                nav.classList.remove('bg-black/95', 'backdrop-blur-md', 'py-4', 'border-b', 'border-white/10');
+                nav.classList.remove('nav-scrolled');
             }
         };
 
-        const langBtn = document.getElementById('lang-btn');
-        const langMenu = document.getElementById('lang-menu');
-        if(langBtn) {
-            langBtn.onclick = (e) => {
-                e.stopPropagation();
-                langMenu.classList.toggle('show');
-            };
-        }
-        document.onclick = () => { if(langMenu) langMenu.classList.remove('show'); };
+        window.onload = () => {
+            const savedLang = localStorage.getItem('preferred-lang') || 'en';
+            changeLang(savedLang);
+        };
     </script>
 </body>
 </html>
