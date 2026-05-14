@@ -23,16 +23,9 @@
             filter: grayscale(0%);
         }
 
-        /* Анимация мобильного меню */
+        /* Плавность появления меню */
         #mobile-menu {
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.3s ease-in-out;
-            background-color: rgba(0, 0, 0, 0.98);
-        }
-        #mobile-menu.active {
-            opacity: 1;
-            pointer-events: auto;
+            transition: opacity 0.3s ease-in-out;
         }
     </style>
 </head>
@@ -63,13 +56,13 @@
                 </div>
             </div>
 
-            <button class="md:hidden p-2 z-" id="menu-btn">
+            <button class="md:hidden p-2 z- relative" id="menu-btn">
                 <svg id="burger-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
             </button>
         </div>
     </nav>
 
-    <div id="mobile-menu" class="fixed inset-0 z- flex flex-col items-center justify-center md:hidden">
+    <div id="mobile-menu" class="fixed inset-0 z- bg-black flex flex-col items-center justify-center md:hidden opacity-0 pointer-events-none">
         <div class="flex flex-col items-center gap-10 text-3xl font-black uppercase italic tracking-widest">
             <a href="#about" data-i18n="nav-coach" class="mobile-link hover:text-[#e6c619]">Coach</a>
             <a href="#principles" data-i18n="nav-principles" class="mobile-link hover:text-[#e6c619]">Principles</a>
@@ -109,7 +102,6 @@
                         <p data-i18n="coach-info-3">Over 17 years of running experience.</p>
                         <p data-i18n="coach-info-4">Candidate Master of Sport in Athletics.</p>
                     </div>
-
                     <div class="bg-white/5 p-10 rounded-[3rem] border border-white/10 mt-12">
                         <h3 data-i18n="spec-title" class="text-3xl font-black uppercase italic mb-8">Specialization</h3>
                         <p data-i18n="spec-text" class="text-white/60 mb-8 leading-relaxed text-xl">Preparing runners for middle- and long-distance races.</p>
@@ -120,7 +112,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="sticky top-24">
                     <div class="w-full aspect-[4/5.6] rounded-[3rem] overflow-hidden bg-black border-4 border-transparent hover:border-[#e6c619] transition-all duration-500 coach-photo-filter relative">
                         <img src="img/coach_1.png" class="absolute w-full h-full object-cover" alt="Vasilii Garifullin">
@@ -151,29 +142,24 @@
     </section>
 
     <section id="pricing" class="py-32 bg-black">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-24">
-                <h2 data-i18n="pricing-title" class="text-5xl md:text-7xl font-black uppercase italic mb-6">Pricing</h2>
-                <div class="inline-block px-6 py-2 bg-white/5 border border-white/10 rounded-full text-[#e6c619] text-sm font-black uppercase italic">
-                    <span data-i18n="price-personal">Personal Training / Consultation: 20 €</span>
-                </div>
-            </div>
-            <div class="grid lg:grid-cols-3 gap-8 mb-20">
-                <div class="p-10 rounded-[3rem] border border-white/10 bg-white/5 flex flex-col">
-                    <h3 data-i18n="plan1-name" class="text-2xl font-black italic uppercase mb-2">Group Training</h3>
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h2 data-i18n="pricing-title" class="text-5xl md:text-7xl font-black uppercase italic mb-24">Pricing</h2>
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="p-10 rounded-[3rem] border border-white/10 bg-white/5">
+                    <h3 data-i18n="plan1-name" class="text-2xl font-black uppercase italic mb-2">Group Training</h3>
                     <div class="text-6xl font-black mb-8">50 €</div>
-                    <ul class="text-[10px] font-black uppercase tracking-tight text-white/50 space-y-2">
+                    <ul class="text-[10px] font-black uppercase text-white/50 space-y-2">
                         <li data-i18n="plan1-feat1">• Stadium sessions</li>
-                        <li data-i18n="plan1-feat2">• 2–3 training sessions per week</li>
+                        <li data-i18n="plan1-feat2">• 2–3 sessions per week</li>
                     </ul>
                 </div>
-                <div class="p-10 rounded-[3rem] bg-brand-yellow text-black scale-105 z-10 shadow-2xl flex flex-col">
-                    <h3 data-i18n="plan2-name" class="text-2xl font-black italic uppercase mb-2">Online Coaching</h3>
+                <div class="p-10 rounded-[3rem] bg-brand-yellow text-black scale-105">
+                    <h3 data-i18n="plan2-name" class="text-2xl font-black uppercase italic mb-2">Online Coaching</h3>
                     <div class="text-6xl font-black mb-8">70 €</div>
-                    <p data-i18n="plan2-tag" class="text-[10px] font-black uppercase italic mb-4">Most Popular</p>
+                    <p data-i18n="plan2-tag" class="text-[10px] font-black uppercase italic">Most Popular</p>
                 </div>
-                <div class="p-10 rounded-[3rem] border border-white/10 bg-white/5 flex flex-col">
-                    <h3 data-i18n="plan3-name" class="text-2xl font-black italic uppercase mb-2">Online + Group</h3>
+                <div class="p-10 rounded-[3rem] border border-white/10 bg-white/5">
+                    <h3 data-i18n="plan3-name" class="text-2xl font-black uppercase italic mb-2">Online + Group</h3>
                     <div class="text-6xl font-black mb-8">100 €</div>
                     <p data-i18n="plan3-tag" class="text-[10px] font-black uppercase text-white/50 italic">Full Experience</p>
                 </div>
@@ -181,18 +167,18 @@
         </div>
     </section>
 
-    <footer id="contact" class="py-32 bg-black border-t border-white/5">
+    <footer id="contact" class="py-32 border-t border-white/5">
         <div class="max-w-7xl mx-auto px-6 text-center">
-            <div class="text-6xl font-black tracking-tighter italic uppercase mb-12">ONE<span class="brand-yellow">TORUN</span></div>
+            <div class="text-6xl font-black italic uppercase mb-12">ONE<span class="brand-yellow">TORUN</span></div>
             <div class="flex justify-center gap-8 mb-12">
                 <a href="https://t.me/garifullinvo" target="_blank" class="w-16 h-16 bg-white/5 hover:bg-brand-yellow hover:text-black transition-all rounded-full flex items-center justify-center border border-white/10">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
                 </a>
                 <a href="https://www.instagram.com/garifullinvasilii/" target="_blank" class="w-16 h-16 bg-white/5 hover:bg-brand-yellow hover:text-black transition-all rounded-full flex items-center justify-center border border-white/10">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
                 </a>
             </div>
-            <p data-i18n="footer-text" class="text-white/20 text-[10px] font-black uppercase tracking-[0.5em]">© 2026 Vasilii Garifullin. Running Coach.</p>
+            <p data-i18n="footer-text" class="text-white/20 text-[10px] font-black uppercase tracking-[0.5em]">© 2026 Vasilii Garifullin.</p>
         </div>
     </footer>
 
@@ -206,8 +192,7 @@
                 "principles-title": "Coaching Principles", "p1-title": "Individual Approach", "p1-text": "I take into account each runner’s strengths and weaknesses, natural predispositions, and personal interests.",
                 "p2-title": "Personalized Support", "p2-text": "Training load is individualized and adjusted according to goals. Support through regular consultations.",
                 "p3-title": "Long-Term Growth", "p3-text": "Training is built progressively and systematically without forcing results.",
-                "pricing-title": "Pricing", "price-personal": "Personal Training / Consultation: 20 €",
-                "plan1-name": "Group Training", "plan1-feat1": "• Stadium sessions", "plan1-feat2": "• 2–3 training sessions per week",
+                "pricing-title": "Pricing", "plan1-name": "Group Training", "plan1-feat1": "• Stadium sessions", "plan1-feat2": "• 2–3 sessions per week",
                 "plan2-name": "Online Coaching", "plan2-tag": "Most Popular",
                 "plan3-name": "Online + Group", "plan3-tag": "Full Experience",
                 "footer-text": "© 2026 Vasilii Garifullin. Running Coach."
@@ -217,11 +202,10 @@
                 "hero-title": "БЕГ КАК <br /> <span class='brand-yellow'>ОБРАЗ ЖИЗНИ</span>",
                 "coach-label": "Тренер", "coach-info-1": "Сертифицированный тренер по бегу.", "coach-info-2": "Тренерский стаж — 3 года.", "coach-info-3": "Более 17 лет личного бегового опыта.", "coach-info-4": "Кандидат в мастера спорта по легкой атлетике.",
                 "spec-title": "Специализация", "spec-text": "Подготовка бегунов на средние и длинные дистанции.", "loc-label": "Локация", "loc-online": "Онлайн по всему миру", "loc-offline": "Оффлайн — Нови-Сад, Сербия",
-                "principles-title": "Принципы тренировок", "p1-title": "Индивидуальный подход", "p1-text": "Учитываю сильные и слабые стороны, предрасположенность и личные интересы каждого атлета.",
-                "p2-title": "Персональный план", "p2-text": "Нагрузка индивидуальна и корректируется под цели атлета. Поддержка через регулярные консультации.",
-                "p3-title": "Долгосрочное развитие", "p3-text": "Тренировки строятся прогрессивно и систематично без форсирования результатов.",
-                "pricing-title": "Цены", "price-personal": "Персональная тренировка / Консультация: 20 €",
-                "plan1-name": "Групповые тренировки", "plan1-feat1": "• Занятия на стадионе", "plan1-feat2": "• 2–3 тренировки в неделю",
+                "principles-title": "Принципы тренировок", "p1-title": "Индивидуальный подход", "p1-text": "Учитываю сильные и слабые стороны каждого атлета.",
+                "p2-title": "Персональный план", "p2-text": "Нагрузка корректируется под цели атлета.",
+                "p3-title": "Долгосрочное развитие", "p3-text": "Тренировки строятся систематично без форсирования.",
+                "pricing-title": "Цены", "plan1-name": "Групповые тренировки", "plan1-feat1": "• Занятия на стадионе", "plan1-feat2": "• 2–3 тренировки в неделю",
                 "plan2-name": "Онлайн-ведение", "plan2-tag": "Популярно",
                 "plan3-name": "Онлайн + Группы", "plan3-tag": "Полное погружение",
                 "footer-text": "© 2026 Василий Гарифуллин. Тренер по бегу."
@@ -231,11 +215,10 @@
                 "hero-title": "TRČANJE KAO <br /> <span class='brand-yellow'>NAČIN ŽIVOTA</span>",
                 "coach-label": "Trener", "coach-info-1": "Sertifikovani trener trčanja.", "coach-info-2": "Trenersko iskustvo — 3 godine.", "coach-info-3": "Više od 17 godina trkačkog iskustva.", "coach-info-4": "Kandidat za majstora sporta u atletici.",
                 "spec-title": "Specijalizacija", "spec-text": "Priprema trkača za srednje i duge staze.", "loc-label": "Lokacija", "loc-online": "Online širom sveta", "loc-offline": "Uživo - Novi Sad, Srbija",
-                "principles-title": "Principi rada", "p1-title": "Individualni pristup", "p1-text": "Uzimam u obzir snage i slabosti svakog trkača, prirodne predispozicije i lična interesovanja.",
-                "p2-title": "Personalizovana podrška", "p2-text": "Opterećenje je prilagođeno ciljevima trkača. Podrška kroz redovne konsultacije.",
-                "p3-title": "Dugoročni razvoj", "p3-text": "Trening se gradi progresivno i sistematično bez forsiranja rezultata.",
-                "pricing-title": "Cene", "price-personal": "Individualni trening / Konsultacije: 20 €",
-                "plan1-name": "Grupni treninzi", "plan1-feat1": "• Treninzi na stadionu", "plan1-feat2": "• 2–3 treninga nedeljno",
+                "principles-title": "Principi rada", "p1-title": "Individualni pristup", "p1-text": "Uzimam u obzir snage i slabosti svakog trkača.",
+                "p2-title": "Personalizovana podrška", "p2-text": "Opterećenje je prilagođeno ciljevima trkača.",
+                "p3-title": "Dugoročni razvoj", "p3-text": "Trening se gradi progresivno bez forsiranja.",
+                "pricing-title": "Cene", "plan1-name": "Grupni treninzi", "plan1-feat1": "• Treninzi na stadionu", "plan1-feat2": "• 2–3 treninga nedeljno",
                 "plan2-name": "Online vođenje", "plan2-tag": "Popularno",
                 "plan3-name": "Online + Grupa", "plan3-tag": "Potpuno iskustvo",
                 "footer-text": "© 2026 Vasilii Garifullin. Trener trčanja."
@@ -245,7 +228,6 @@
         function changeLang(lang) {
             const currentLangEl = document.getElementById('current-lang');
             if (currentLangEl) currentLangEl.textContent = lang.toUpperCase();
-            
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (translations[lang] && translations[lang][key]) {
@@ -253,39 +235,42 @@
                 }
             });
             localStorage.setItem('preferred-lang', lang);
-            const langMenu = document.getElementById('lang-menu');
-            if (langMenu) langMenu.classList.remove('show');
             closeMobileMenu();
         }
 
+        // ЛОГИКА УПРАВЛЕНИЯ МЕНЮ
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
+        const body = document.body;
 
         function toggleMenu() {
-            mobileMenu.classList.toggle('active');
-            if (mobileMenu.classList.contains('active')) {
+            const isActive = mobileMenu.classList.contains('active');
+            if (!isActive) {
+                // Открываем
+                mobileMenu.classList.add('active');
+                mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+                mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
+                body.style.overflow = 'hidden'; // Запрет прокрутки сайта
                 menuBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>';
             } else {
-                menuBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>';
+                // Закрываем
+                closeMobileMenu();
             }
         }
 
         function closeMobileMenu() {
-            if (mobileMenu) {
-                mobileMenu.classList.remove('active');
-                menuBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>';
-            }
+            mobileMenu.classList.remove('active', 'opacity-100', 'pointer-events-auto');
+            mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+            body.style.overflow = ''; // Разрешаем прокрутку
+            menuBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>';
         }
 
-        menuBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleMenu();
-        });
-
+        menuBtn.addEventListener('click', toggleMenu);
         document.querySelectorAll('.mobile-link').forEach(link => {
             link.addEventListener('click', closeMobileMenu);
         });
 
+        // ДЕСКТОПНЫЙ ВЫБОР ЯЗЫКА
         const langBtn = document.getElementById('lang-btn');
         const langMenu = document.getElementById('lang-menu');
         if(langBtn) {
@@ -294,18 +279,16 @@
                 langMenu.classList.toggle('show');
             };
         }
-        
-        document.onclick = () => {
-            if(langMenu) langMenu.classList.remove('show');
-        };
+        document.onclick = () => { if(langMenu) langMenu.classList.remove('show'); };
 
         window.onload = () => {
             const savedLang = localStorage.getItem('preferred-lang') || 'en';
             changeLang(savedLang);
         };
 
-        const navbar = document.getElementById('navbar');
+        // СКРОЛЛ НАВИГАЦИИ
         window.onscroll = () => {
+            const navbar = document.getElementById('navbar');
             if (window.scrollY > 50) {
                 navbar.classList.add('bg-black/90', 'backdrop-blur-md', 'py-4', 'border-b', 'border-white/10');
             } else {
