@@ -15,11 +15,18 @@
         #lang-menu.show { display: block; }
         .coach-photo-filter { filter: grayscale(100%); transition: filter 0.5s ease; }
         .coach-photo-filter:hover { filter: grayscale(0%); }
+        
+        /* Улучшенная отзывчивость меню */
+        #mobile-menu.active {
+            opacity: 1 !important;
+            pointer-events: auto !important;
+            visibility: visible !important;
+        }
     </style>
 </head>
 <body class="bg-black text-white selection-yellow">
 
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-transparent py-6">
+    <nav id="navbar" class="fixed w-full z- transition-all duration-300 bg-transparent py-6">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
             <div class="flex items-center gap-3">
                 <img src="img/logo.png" alt="ONETORUN" class="h-10 w-auto">
@@ -44,13 +51,15 @@
                 </div>
             </div>
 
-            <button class="md:hidden p-2 z- relative" id="menu-btn">
-                <svg id="burger-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+            <button class="md:hidden p-2 relative" id="menu-btn" aria-label="Toggle menu">
+                <svg id="burger-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/>
+                </svg>
             </button>
         </div>
     </nav>
 
-    <div id="mobile-menu" class="fixed inset-0 z- bg-black flex flex-col items-center justify-center md:hidden transition-opacity duration-300 opacity-0 pointer-events-none">
+    <div id="mobile-menu" class="fixed inset-0 z- bg-black flex flex-col items-center justify-center md:hidden transition-all duration-300 opacity-0 pointer-events-none invisible">
         <div class="flex flex-col items-center gap-10 text-3xl font-black uppercase italic tracking-widest">
             <a href="#about" data-i18n="nav-coach" class="mobile-link hover:text-[#e6c619]"></a>
             <a href="#principles" data-i18n="nav-principles" class="mobile-link hover:text-[#e6c619]"></a>
@@ -169,7 +178,7 @@
                 "spec-title": "Specialization", "spec-text": "Preparing runners for middle- and long-distance races.",
                 "loc-label": "Location", "loc-online": "Worldwide Online", "loc-offline": "Offline - Novi Sad, Serbia",
                 "principles-title": "Coaching Principles", 
-                "p1-title": "Individual Approach", "p1-text": "I take into account each runner’s strengths and weaknesses, predispositions, and personal interests.",
+                "p1-title": "Individual Approach", "p1-text": "I take into account each runner’s strengths and weaknesses, natural predispositions, and personal interests.",
                 "p2-title": "Personalized Support", "p2-text": "Training load is individualized and adjusted according to goals. Support through regular consultations.",
                 "p3-title": "Long-Term Growth", "p3-text": "Training is built progressively and systematically without forcing results.",
                 "pricing-title": "Pricing", "price-personal": "Personal Training / Consultation: 20 €",
@@ -185,13 +194,13 @@
                 "spec-title": "Специализация", "spec-text": "Подготовка бегунов на средние и длинные дистанции.",
                 "loc-label": "Локация", "loc-online": "Онлайн по всему миру", "loc-offline": "Оффлайн - Нови-Сад, Сербия",
                 "principles-title": "Принципы тренировок", 
-                "p1-title": "Индивидуальный подход", "p1-text": "Учитываю сильные и слабые стороны каждого бегуна, предрасположенности и личные интересы.",
+                "p1-title": "Индивидуальный подход", "p1-text": "Учитываю сильные и слабые стороны каждого бегуна, природные предрасположенности и личные интересы.",
                 "p2-title": "Персональный план", "p2-text": "Тренировочная нагрузка индивидуальна и корректируется в соответствии с целями. Поддержка через регулярные консультации.",
                 "p3-title": "Долгосрочный рост", "p3-text": "Тренировочный процесс строится прогрессивно и систематично, без форсирования результатов.",
                 "pricing-title": "Цены", "price-personal": "Персональная тренировка / Консультация: 20 €",
                 "plan1-name": "Групповые тренировки", "plan1-feat1": "• Тренировки на стадионе", "plan1-feat2": "• 2–3 занятия в неделю",
                 "plan2-name": "Онлайн-ведение", "plan2-tag": "Самый популярный",
-                "plan3-name": "Онлайн + Группа", "plan3-tag": "Максимальный опыт",
+                "plan3-name": "Онлайн + Группы", "plan3-tag": "Полное погружение",
                 "footer-text": "© 2026 Василий Гарифуллин. Тренер по бегу."
             },
             sr: {
@@ -199,7 +208,7 @@
                 "hero-title": "TRČANJE KAO <br /> <span class='brand-yellow'>NAČIN ŽIVOTA</span>",
                 "coach-label": "Trener", "coach-info-1": "Sertifikovani trener trčanja.", "coach-info-2": "Trenersko iskustvo — 3 godine.", "coach-info-3": "Više od 17 godina trkačkog iskustva.", "coach-info-4": "Kandidat za majstora sporta u atletici.",
                 "spec-title": "Specijalizacija", "spec-text": "Priprema trkača za srednje i duge staze.",
-                "loc-label": "Lokacija", "loc-online": "Online širom sveta", "loc-offline": "Uživo — Novi Sad, Srbija",
+                "loc-label": "Lokacija", "loc-online": "Online širom sveta", "loc-offline": "Offline - Novi Sad, Srbija",
                 "principles-title": "Principi rada", 
                 "p1-title": "Individualni pristup", "p1-text": "Uzimam u obzir snage i slabosti svakog trkača, prirodne predispozicije i lična interesovanja.",
                 "p2-title": "Personalizovana podrška", "p2-text": "Opterećenje je individualizovano i prilagođeno ciljevima. Podrška kroz redovne konsultacije.",
@@ -229,32 +238,40 @@
         const mobileMenu = document.getElementById('mobile-menu');
         const body = document.body;
 
-        function toggleMenu() {
+        // Оптимизированная функция переключения
+        function toggleMenu(e) {
+            if(e) e.stopPropagation();
             const isActive = mobileMenu.classList.contains('active');
             if (!isActive) {
                 mobileMenu.classList.add('active');
-                mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
-                mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
+                mobileMenu.classList.remove('opacity-0', 'pointer-events-none', 'invisible');
                 body.style.overflow = 'hidden';
+                // Меняем иконку на крестик
+                menuBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>';
             } else {
                 closeMobileMenu();
             }
         }
 
         function closeMobileMenu() {
-            mobileMenu.classList.remove('active', 'opacity-100', 'pointer-events-auto');
-            mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+            mobileMenu.classList.remove('active');
+            mobileMenu.classList.add('opacity-0', 'pointer-events-none', 'invisible');
             body.style.overflow = '';
+            menuBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>';
         }
 
         menuBtn.addEventListener('click', toggleMenu);
         document.querySelectorAll('.mobile-link').forEach(link => link.addEventListener('click', closeMobileMenu));
 
         window.onload = () => { changeLang(localStorage.getItem('preferred-lang') || 'en'); };
+        
         window.onscroll = () => {
             const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) nav.classList.add('bg-black/90', 'backdrop-blur-md', 'py-4', 'border-b', 'border-white/10');
-            else nav.classList.remove('bg-black/90', 'backdrop-blur-md', 'py-4', 'border-b', 'border-white/10');
+            if (window.scrollY > 50) {
+                nav.classList.add('bg-black/95', 'backdrop-blur-md', 'py-4', 'border-b', 'border-white/10');
+            } else {
+                nav.classList.remove('bg-black/95', 'backdrop-blur-md', 'py-4', 'border-b', 'border-white/10');
+            }
         };
 
         const langBtn = document.getElementById('lang-btn');
