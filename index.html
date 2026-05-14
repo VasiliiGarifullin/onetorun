@@ -11,10 +11,29 @@
         .brand-yellow { color: #e6c619; }
         .bg-brand-yellow { background-color: #e6c619; }
         .selection-yellow::selection { background: #e6c619; color: black; }
-        #lang-menu { display: none; }
-        #lang-menu.show { display: block; }
+        
+        /* Выпадающее меню языков */
+        #lang-menu { 
+            display: none; 
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.2s ease;
+        }
+        #lang-menu.show { 
+            display: block; 
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
         .coach-photo-filter { filter: grayscale(100%); transition: filter 0.5s ease; }
         .coach-photo-filter:hover { filter: grayscale(0%); }
+
+        /* Фикс мобильного меню */
+        #mobile-menu.active {
+            opacity: 1 !important;
+            pointer-events: auto !important;
+            visibility: visible !important;
+        }
     </style>
 </head>
 <body class="bg-black text-white selection-yellow">
@@ -25,45 +44,53 @@
                 <img src="img/logo.png" alt="ONETORUN" class="h-10 w-auto">
             </div>
             
+            <!-- Desktop Nav -->
             <div class="hidden md:flex gap-8 text-[10px] font-black items-center uppercase tracking-[0.3em]">
                 <a href="#about" data-i18n="nav-coach" class="hover:text-[#e6c619] transition-colors">Coach</a>
                 <a href="#principles" data-i18n="nav-principles" class="hover:text-[#e6c619] transition-colors">Principles</a>
                 <a href="#pricing" data-i18n="nav-pricing" class="hover:text-[#e6c619] transition-colors">Pricing</a>
                 <a href="#contact" data-i18n="nav-contacts" class="hover:text-[#e6c619] transition-colors">Contacts</a>
                 
-                <div class="relative group">
-                    <button id="lang-btn" class="flex items-center gap-1 border border-white/20 px-3 py-1 rounded-full hover:border-[#e6c619] transition-all uppercase text-[10px] font-black">
+                <!-- Lang Switcher Desktop -->
+                <div class="relative">
+                    <button id="lang-btn" class="flex items-center gap-1 border border-white/20 px-3 py-1 rounded-full hover:border-[#e6c619] transition-all uppercase">
                         <span id="current-lang">EN</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                     </button>
-                    <div id="lang-menu" class="absolute right-0 mt-2 w-20 bg-black/90 border border-white/10 rounded-xl overflow-hidden backdrop-blur-md">
-                        <button onclick="changeLang('en')" class="w-full px-4 py-2 text-left hover:bg-brand-yellow hover:text-black transition-colors border-b border-white/5 text-[10px] font-black">EN</button>
-                        <button onclick="changeLang('ru')" class="w-full px-4 py-2 text-left hover:bg-brand-yellow hover:text-black transition-colors border-b border-white/5 text-[10px] font-black">RU</button>
-                        <button onclick="changeLang('sr')" class="w-full px-4 py-2 text-left hover:bg-brand-yellow hover:text-black transition-colors text-[10px] font-black">SR</button>
+                    <div id="lang-menu" class="absolute right-0 mt-2 w-24 bg-black/95 border border-white/10 rounded-xl overflow-hidden backdrop-blur-md shadow-2xl">
+                        <button onclick="changeLang('en')" class="w-full px-4 py-2 text-left hover:bg-brand-yellow hover:text-black transition-colors border-b border-white/5">EN</button>
+                        <button onclick="changeLang('ru')" class="w-full px-4 py-2 text-left hover:bg-brand-yellow hover:text-black transition-colors border-b border-white/5">RU</button>
+                        <button onclick="changeLang('sr')" class="w-full px-4 py-2 text-left hover:bg-brand-yellow hover:text-black transition-colors">SR</button>
                     </div>
                 </div>
             </div>
 
-            <button class="md:hidden p-2 z- relative" id="menu-btn">
-                <svg id="burger-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+            <!-- Burger Button -->
+            <button class="md:hidden p-2 z-[60] relative" id="menu-btn" aria-label="Menu">
+                <svg id="burger-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/>
+                </svg>
             </button>
         </div>
     </nav>
 
-    <div id="mobile-menu" class="fixed inset-0 z- bg-black flex flex-col items-center justify-center md:hidden transition-opacity duration-300 opacity-0 pointer-events-none">
-        <div class="flex flex-col items-center gap-10 text-3xl font-black uppercase italic tracking-widest">
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 z-[50] bg-black flex flex-col items-center justify-center md:hidden opacity-0 pointer-events-none transition-all duration-300 visibility-hidden">
+        <div class="flex flex-col items-center gap-8 text-3xl font-black uppercase italic tracking-widest">
             <a href="#about" data-i18n="nav-coach" class="mobile-link hover:text-[#e6c619]">Coach</a>
             <a href="#principles" data-i18n="nav-principles" class="mobile-link hover:text-[#e6c619]">Principles</a>
             <a href="#pricing" data-i18n="nav-pricing" class="mobile-link hover:text-[#e6c619]">Pricing</a>
             <a href="#contact" data-i18n="nav-contacts" class="mobile-link hover:text-[#e6c619]">Contacts</a>
-            <div class="flex gap-4 mt-10 border-t border-white/10 pt-10">
-                <button onclick="changeLang('en')" class="px-4 py-2 border border-white/20 rounded-full text-sm">EN</button>
-                <button onclick="changeLang('ru')" class="px-4 py-2 border border-white/20 rounded-full text-sm">RU</button>
-                <button onclick="changeLang('sr')" class="px-4 py-2 border border-white/20 rounded-full text-sm">SR</button>
+            
+            <div class="flex gap-3 mt-10 border-t border-white/10 pt-10">
+                <button onclick="changeLang('en')" class="px-4 py-2 border border-white/20 rounded-full text-sm font-bold">EN</button>
+                <button onclick="changeLang('ru')" class="px-4 py-2 border border-white/20 rounded-full text-sm font-bold">RU</button>
+                <button onclick="changeLang('sr')" class="px-4 py-2 border border-white/20 rounded-full text-sm font-bold">SR</button>
             </div>
         </div>
     </div>
 
+    <!-- Hero -->
     <section class="relative h-screen flex items-center justify-center overflow-hidden bg-black">
         <div class="absolute inset-0 z-0">
             <div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent z-10"></div>
@@ -75,6 +102,7 @@
         </div>
     </section>
 
+    <!-- Coach Section -->
     <section id="about" class="py-32 bg-black border-t border-white/5">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid lg:grid-cols-2 gap-16 items-start">
@@ -106,6 +134,7 @@
         </div>
     </section>
 
+    <!-- Principles -->
     <section id="principles" class="py-32 bg-white text-black">
         <div class="max-w-7xl mx-auto px-6">
             <h2 data-i18n="principles-title" class="text-5xl md:text-7xl font-black uppercase italic mb-20 tracking-tighter">Coaching Principles</h2>
@@ -116,7 +145,7 @@
                 </div>
                 <div class="p-8 bg-black/5 rounded-3xl">
                     <h4 data-i18n="p2-title" class="text-2xl font-black uppercase italic mb-4">Personalized Support</h4>
-                    <p data-i18n="p2-text" class="font-bold opacity-70">Training load is individualized and adjusted according to goals. Support through regular consultations.</p>
+                    <p data-i18n="p2-text" class="font-bold opacity-70">Training load is individualized and adjusted according to goals.</p>
                 </div>
                 <div class="p-8 bg-black/5 rounded-3xl">
                     <h4 data-i18n="p3-title" class="text-2xl font-black uppercase italic mb-4">Long-Term Growth</h4>
@@ -126,6 +155,7 @@
         </div>
     </section>
 
+    <!-- Pricing -->
     <section id="pricing" class="py-32 bg-black">
         <div class="max-w-7xl mx-auto px-6 text-center">
             <h2 data-i18n="pricing-title" class="text-5xl md:text-7xl font-black uppercase italic mb-6">Pricing</h2>
@@ -171,87 +201,117 @@
                 "p2-title": "Personalized Support", "p2-text": "Training load is individualized and adjusted according to goals.",
                 "p3-title": "Long-Term Growth", "p3-text": "Training is built progressively and systematically without forcing results.",
                 "pricing-title": "Pricing", "price-personal": "Personal Training / Consultation: 20 €",
-                "plan1-name": "Group Training", "plan2-name": "Online Coaching", "plan3-name": "Online + Group",
-                "footer-text": "© 2026 Vasilii Garifullin. Running Coach."
+                "plan1-name": "Group Training", "plan1-feat1": "• Stadium sessions", "plan1-feat2": "• 2–3 training sessions per week",
+                "plan2-name": "Online Coaching", "plan2-tag": "Most Popular",
+                "plan3-name": "Online + Group", "plan3-tag": "Full Experience",
+                "footer-text": "© 2026 Vasilii Garifullin. Running Coach.",
+                "loc-label": "Location", "loc-online": "Worldwide Online", "loc-offline": "Offline - Novi Sad, Serbia"
             },
             ru: {
                 "nav-coach": "Тренер", "nav-principles": "Принципы", "nav-pricing": "Цены", "nav-contacts": "Контакты",
                 "hero-title": "БЕГ КАК <br /> <span class='brand-yellow'>ОБРАЗ ЖИЗНИ</span>",
                 "coach-label": "Тренер", "coach-info-1": "Сертифицированный тренер по бегу.", "coach-info-2": "Тренерский стаж — 3 года.", "coach-info-3": "Более 17 лет личного бегового опыта.", "coach-info-4": "Кандидат в мастера спорта по легкой атлетике.",
                 "spec-title": "Специализация", "spec-text": "Подготовка бегунов на средние и длинные дистанции.",
-                "principles-title": "Принципы тренировок", "p1-title": "Индивидуальный подход", "p1-text": "Я учитываю сильные и слабые стороны каждого бегуна, природные предрасположенности и личные интересы.",
-                "p2-title": "Персональный план", "p2-text": "Тренировочная нагрузка индивидуальна и корректируется в соответствии с целями.",
-                "p3-title": "Долгосрочный рост", "p3-text": "Тренировочный процесс строится прогрессивно и систематично, без форсирования результатов.",
+                "principles-title": "Принципы тренировок", "p1-title": "Индивидуальный подход", "p1-text": "Учитываю сильные и слабые стороны каждого атлета.",
+                "p2-title": "Персональный план", "p2-text": "Нагрузка корректируется под цели атлета.",
+                "p3-title": "Долгосрочное развитие", "p3-text": "Тренировки строятся систематично без форсирования.",
                 "pricing-title": "Цены", "price-personal": "Персональная тренировка / Консультация: 20 €",
-                "plan1-name": "Групповые тренировки", "plan2-name": "Онлайн-ведение", "plan3-name": "Онлайн + Группы",
-                "footer-text": "© 2026 Василий Гарифуллин. Тренер по бегу."
+                "plan1-name": "Групповые тренировки", "plan1-feat1": "• Занятия на стадионе", "plan1-feat2": "• 2–3 тренировки в неделю",
+                "plan2-name": "Онлайн-ведение", "plan2-tag": "Самый популярный",
+                "plan3-name": "Онлайн + Группы", "plan3-tag": "Максимальный результат",
+                "footer-text": "© 2026 Василий Гарифуллин. Тренер по бегу.",
+                "loc-label": "Локация", "loc-online": "Онлайн по всему миру", "loc-offline": "Офлайн - Нови-Сад, Сербия"
             },
             sr: {
                 "nav-coach": "Trener", "nav-principles": "Principi", "nav-pricing": "Cene", "nav-contacts": "Kontakti",
                 "hero-title": "TRČANJE KAO <br /> <span class='brand-yellow'>NAČIN ŽIVOTA</span>",
-                "coach-label": "Trener", "coach-info-1": "Sertifikovani trener trčanja.", "coach-info-2": "Trenersko iskustvo — 3 godine.", "coach-info-3": "Više od 17 godina trkačkog iskustva.", "coach-info-4": "Kandidat za majstora sporta u atletici.",
+                "coach-label": "Trener", "coach-info-1": "Sertifikovani trener trčanja.", "coach-info-2": "Iskustvo trenera — 3 godine.", "coach-info-3": "Preko 17 godina iskustva u trčanju.", "coach-info-4": "Kandidat za majstora sporta u atletici.",
                 "spec-title": "Specijalizacija", "spec-text": "Priprema trkača za srednje i duge staze.",
-                "principles-title": "Principi rada", "p1-title": "Individualni pristup", "p1-text": "Uzimam u obzir snage i slabosti svakog trkača, prirodne predispozicije i lična interesovanja.",
-                "p2-title": "Personalizovana podrška", "p2-text": "Opterećenje je individualizovano i prilagođeno ciljevima.",
-                "p3-title": "Dugoročni razvoj", "p3-text": "Trening se gradi progresivno i sistematično bez forsiranja rezultata.",
-                "pricing-title": "Cene", "price-personal": "Personalni trening / Konsultacija: 20 €",
-                "plan1-name": "Grupni treninzi", "plan2-name": "Online vođenje", "plan3-name": "Online + Grupa",
-                "footer-text": "© 2026 Vasilii Garifullin. Trener trčanja."
+                "principles-title": "Principi treninga", "p1-title": "Individualni pristup", "p1-text": "Uzimam u obzir snage i slabosti svakog trkača, prirodne predispozicije i interesovanja.",
+                "p2-title": "Personalizovana podrška", "p2-text": "Opterećenje se prilagođava ciljevima.",
+                "p3-title": "Dugoročni razvoj", "p3-text": "Trening se gradi progresivno bez forsiranja rezultata.",
+                "pricing-title": "Cene", "price-personal": "Individualni trening / Konsultacija: 20 €",
+                "plan1-name": "Grupni treninzi", "plan1-feat1": "• Sesije na stadionu", "plan1-feat2": "• 2–3 treninga nedeljno",
+                "plan2-name": "Online vođenje", "plan2-tag": "Najpopularnije",
+                "plan3-name": "Online + Grupa", "plan3-tag": "Puni doživljaj",
+                "footer-text": "© 2026 Vasilii Garifullin. Trener trčanja.",
+                "loc-label": "Lokacija", "loc-online": "Online širom sveta", "loc-offline": "Offline - Novi Sad, Srbija"
             }
         };
 
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const langBtn = document.getElementById('lang-btn');
+        const langMenu = document.getElementById('lang-menu');
+        const currentLangText = document.getElementById('current-lang');
+
+        // Смена языка
         function changeLang(lang) {
-            const currentLangEl = document.getElementById('current-lang');
-            if (currentLangEl) currentLangEl.textContent = lang.toUpperCase();
+            if (currentLangText) currentLangText.textContent = lang.toUpperCase();
+            
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
-                if (translations[lang] && translations[lang][key]) el.innerHTML = translations[lang][key];
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
             });
+            
             localStorage.setItem('preferred-lang', lang);
+            langMenu.classList.remove('show');
             closeMobileMenu();
         }
 
-        const menuBtn = document.getElementById('menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const body = document.body;
-
+        // Мобильное меню
         function toggleMenu() {
-            const isActive = mobileMenu.classList.contains('active');
-            if (!isActive) {
-                mobileMenu.classList.add('active');
-                mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
-                mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
-                body.style.overflow = 'hidden';
+            mobileMenu.classList.toggle('active');
+            if (mobileMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
             } else {
-                closeMobileMenu();
+                document.body.style.overflow = '';
             }
         }
 
         function closeMobileMenu() {
-            mobileMenu.classList.remove('active', 'opacity-100', 'pointer-events-auto');
-            mobileMenu.classList.add('opacity-0', 'pointer-events-none');
-            body.style.overflow = '';
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
         }
 
-        menuBtn.addEventListener('click', toggleMenu);
-        document.querySelectorAll('.mobile-link').forEach(link => link.addEventListener('click', closeMobileMenu));
+        // Event Listeners
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleMenu();
+        });
 
-        window.onload = () => { changeLang(localStorage.getItem('preferred-lang') || 'en'); };
-        window.onscroll = () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) nav.classList.add('bg-black/90', 'backdrop-blur-md', 'py-4', 'border-b', 'border-white/10');
-            else nav.classList.remove('bg-black/90', 'backdrop-blur-md', 'py-4', 'border-b', 'border-white/10');
+        langBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langMenu.classList.toggle('show');
+        });
+
+        document.addEventListener('click', () => {
+            langMenu.classList.remove('show');
+        });
+
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+
+        // Init
+        window.onload = () => { 
+            const savedLang = localStorage.getItem('preferred-lang') || 'en';
+            changeLang(savedLang); 
         };
 
-        const langBtn = document.getElementById('lang-btn');
-        const langMenu = document.getElementById('lang-menu');
-        if(langBtn) {
-            langBtn.onclick = (e) => {
-                e.stopPropagation();
-                langMenu.classList.toggle('show');
-            };
-        }
-        document.onclick = () => { if(langMenu) langMenu.classList.remove('show'); };
+        // Scroll Navbar
+        window.onscroll = () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('bg-black/95', 'backdrop-blur-md', 'py-4', 'border-b', 'border-white/10');
+                nav.classList.remove('py-6');
+            } else {
+                nav.classList.remove('bg-black/95', 'backdrop-blur-md', 'py-4', 'border-b', 'border-white/10');
+                nav.classList.add('py-6');
+            }
+        };
     </script>
 </body>
 </html>
