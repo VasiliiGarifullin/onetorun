@@ -12,7 +12,7 @@
         .bg-brand-yellow { background-color: #e6c619; }
         .selection-yellow::selection { background: #e6c619; color: black; }
         
-        /* Выпадающее меню языков */
+        /* Десктопное выпадающее меню языков */
         #lang-menu { 
             display: none; 
             opacity: 0;
@@ -28,11 +28,18 @@
         .coach-photo-filter { filter: grayscale(100%); transition: filter 0.5s ease; }
         .coach-photo-filter:hover { filter: grayscale(0%); }
 
-        /* Фикс мобильного меню */
+        /* Состояние открытого мобильного меню */
         #mobile-menu.active {
             opacity: 1 !important;
             pointer-events: auto !important;
             visibility: visible !important;
+        }
+
+        /* Активная кнопка языка (подсветка) */
+        .lang-active {
+            background-color: #e6c619 !important;
+            color: black !important;
+            border-color: #e6c619 !important;
         }
     </style>
 </head>
@@ -44,14 +51,14 @@
                 <img src="img/logo.png" alt="ONETORUN" class="h-10 w-auto">
             </div>
             
-            <!-- Desktop Nav -->
+            <!-- Навигация для ПК -->
             <div class="hidden md:flex gap-8 text-[10px] font-black items-center uppercase tracking-[0.3em]">
                 <a href="#about" data-i18n="nav-coach" class="hover:text-[#e6c619] transition-colors">Coach</a>
                 <a href="#principles" data-i18n="nav-principles" class="hover:text-[#e6c619] transition-colors">Principles</a>
                 <a href="#pricing" data-i18n="nav-pricing" class="hover:text-[#e6c619] transition-colors">Pricing</a>
                 <a href="#contact" data-i18n="nav-contacts" class="hover:text-[#e6c619] transition-colors">Contacts</a>
                 
-                <!-- Lang Switcher Desktop -->
+                <!-- ПК: Выпадающий список (здесь уместен для экономии места) -->
                 <div class="relative">
                     <button id="lang-btn" class="flex items-center gap-1 border border-white/20 px-3 py-1 rounded-full hover:border-[#e6c619] transition-all uppercase">
                         <span id="current-lang">EN</span>
@@ -65,7 +72,7 @@
                 </div>
             </div>
 
-            <!-- Burger Button -->
+            <!-- Кнопка Бургер -->
             <button class="md:hidden p-2 z-[60] relative" id="menu-btn" aria-label="Menu">
                 <svg id="burger-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/>
@@ -74,23 +81,24 @@
         </div>
     </nav>
 
-    <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu" class="fixed inset-0 z-[50] bg-black flex flex-col items-center justify-center md:hidden opacity-0 pointer-events-none transition-all duration-300 visibility-hidden">
+    <!-- Мобильное меню с прямым выбором языка -->
+    <div id="mobile-menu" class="fixed inset-0 z-[50] bg-black flex flex-col items-center justify-center md:hidden opacity-0 pointer-events-none transition-all duration-300">
         <div class="flex flex-col items-center gap-8 text-3xl font-black uppercase italic tracking-widest">
             <a href="#about" data-i18n="nav-coach" class="mobile-link hover:text-[#e6c619]">Coach</a>
             <a href="#principles" data-i18n="nav-principles" class="mobile-link hover:text-[#e6c619]">Principles</a>
             <a href="#pricing" data-i18n="nav-pricing" class="mobile-link hover:text-[#e6c619]">Pricing</a>
             <a href="#contact" data-i18n="nav-contacts" class="mobile-link hover:text-[#e6c619]">Contacts</a>
             
-            <div class="flex gap-3 mt-10 border-t border-white/10 pt-10">
-                <button onclick="changeLang('en')" class="px-4 py-2 border border-white/20 rounded-full text-sm font-bold">EN</button>
-                <button onclick="changeLang('ru')" class="px-4 py-2 border border-white/20 rounded-full text-sm font-bold">RU</button>
-                <button onclick="changeLang('sr')" class="px-4 py-2 border border-white/20 rounded-full text-sm font-bold">SR</button>
+            <!-- Прямой выбор языка: Без выпадающих списков -->
+            <div class="flex gap-4 mt-12 border-t border-white/10 pt-10">
+                <button onclick="changeLang('en')" data-btn-lang="en" class="lang-selector px-5 py-2 border border-white/20 rounded-full text-base font-black transition-all">EN</button>
+                <button onclick="changeLang('ru')" data-btn-lang="ru" class="lang-selector px-5 py-2 border border-white/20 rounded-full text-base font-black transition-all">RU</button>
+                <button onclick="changeLang('sr')" data-btn-lang="sr" class="lang-selector px-5 py-2 border border-white/20 rounded-full text-base font-black transition-all">SR</button>
             </div>
         </div>
     </div>
 
-    <!-- Hero -->
+    <!-- Hero Section -->
     <section class="relative h-screen flex items-center justify-center overflow-hidden bg-black">
         <div class="absolute inset-0 z-0">
             <div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent z-10"></div>
@@ -102,7 +110,7 @@
         </div>
     </section>
 
-    <!-- Coach Section -->
+    <!-- Coach -->
     <section id="about" class="py-32 bg-black border-t border-white/5">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid lg:grid-cols-2 gap-16 items-start">
@@ -245,14 +253,25 @@
         const langMenu = document.getElementById('lang-menu');
         const currentLangText = document.getElementById('current-lang');
 
-        // Смена языка
+        // Функция смены языка
         function changeLang(lang) {
+            // Обновляем текст на кнопке ПК
             if (currentLangText) currentLangText.textContent = lang.toUpperCase();
             
+            // Переводим все элементы
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (translations[lang] && translations[lang][key]) {
                     el.innerHTML = translations[lang][key];
+                }
+            });
+
+            // Подсвечиваем активную кнопку в мобильном меню
+            document.querySelectorAll('.lang-selector').forEach(btn => {
+                if(btn.getAttribute('data-btn-lang') === lang) {
+                    btn.classList.add('lang-active');
+                } else {
+                    btn.classList.remove('lang-active');
                 }
             });
             
@@ -261,7 +280,7 @@
             closeMobileMenu();
         }
 
-        // Мобильное меню
+        // Управление мобильным меню
         function toggleMenu() {
             mobileMenu.classList.toggle('active');
             if (mobileMenu.classList.contains('active')) {
@@ -276,12 +295,13 @@
             document.body.style.overflow = '';
         }
 
-        // Event Listeners
+        // Слушатели событий
         menuBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             toggleMenu();
         });
 
+        // Для ПК выпадашки
         langBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             langMenu.classList.toggle('show');
@@ -295,13 +315,13 @@
             link.addEventListener('click', closeMobileMenu);
         });
 
-        // Init
+        // Инициализация при загрузке
         window.onload = () => { 
             const savedLang = localStorage.getItem('preferred-lang') || 'en';
             changeLang(savedLang); 
         };
 
-        // Scroll Navbar
+        // Липкая шапка
         window.onscroll = () => {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 50) {
