@@ -15,11 +15,9 @@
         #lang-menu { display: none; }
         #lang-menu.show { display: block; }
         
-        /* Плавные переходы для фото */
         .coach-photo-filter { filter: grayscale(100%); transition: all 0.5s ease; }
         .coach-photo-filter:hover { filter: grayscale(0%); transform: scale(1.02); }
 
-        /* Состояния мобильного меню */
         #mobile-menu {
             transition: opacity 0.3s ease, visibility 0.3s ease;
         }
@@ -29,7 +27,6 @@
             pointer-events: auto !important;
         }
 
-        /* Навигация */
         .nav-scrolled {
             background-color: rgba(0, 0, 0, 0.98);
             backdrop-filter: blur(15px);
@@ -189,8 +186,6 @@
 
     <footer id="contact" class="py-32 border-t border-white/5 text-center">
         <div class="text-6xl font-black italic uppercase mb-12 tracking-tighter">ONE<span class="brand-yellow">TORUN</span></div>
-        <div class="flex justify-center gap-8 mb-12 opacity-50">
-            </div>
         <p data-i18n="footer-text" class="text-white/20 text-[10px] font-black uppercase tracking-[0.5em]"></p>
     </footer>
 
@@ -210,7 +205,7 @@
                 "plan1-name": "Group Training", "plan1-feat1": "• Stadium sessions in Novi Sad", "plan1-feat2": "• 2–3 training sessions per week",
                 "plan2-name": "Online Coaching", "plan2-tag": "Most Popular",
                 "plan3-name": "Online + Group", "plan3-tag": "The Full Experience",
-                "footer-text": "© 2026 Vasilii Garifullin. All rights reserved."
+                "footer-text": "© 2026 Vasilii Garifullin. Running Coach."
             },
             ru: {
                 "nav-coach": "Тренер", "nav-principles": "Принципы", "nav-pricing": "Цены", "nav-contacts": "Контакты",
@@ -226,7 +221,7 @@
                 "plan1-name": "Групповые тренировки", "plan1-feat1": "• Тренировки на стадионе", "plan1-feat2": "• 2–3 занятия в неделю",
                 "plan2-name": "Онлайн-ведение", "plan2-tag": "Самый популярный",
                 "plan3-name": "Онлайн + Группы", "plan3-tag": "Максимальный результат",
-                "footer-text": "© 2026 Василий Гарифуллин. Все права защищены."
+                "footer-text": "© 2026 Василий Гарифуллин. Тренер по бегу."
             },
             sr: {
                 "nav-coach": "Trener", "nav-principles": "Principi", "nav-pricing": "Cene", "nav-contacts": "Kontakti",
@@ -242,7 +237,7 @@
                 "plan1-name": "Grupni treninzi", "plan1-feat1": "• Treninzi na stadionu", "plan1-feat2": "• 2–3 treninga nedeljno",
                 "plan2-name": "Online vođenje", "plan2-tag": "Najpopularnije",
                 "plan3-name": "Online + Grupa", "plan3-tag": "Potpuno iskustvo",
-                "footer-text": "© 2026 Vasilii Garifullin. Sva prava zadržana."
+                "footer-text": "© 2026 Vasilii Garifullin. Trener trčanja."
             }
         };
 
@@ -253,7 +248,6 @@
         const langMenu = document.getElementById('lang-menu');
         const burgerIconContainer = document.getElementById('burger-icon-container');
 
-        // Иконки (Крестик и Бургер)
         const burgerSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>`;
         const closeSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>`;
 
@@ -287,7 +281,6 @@
             langMenu.classList.remove('show');
         }
 
-        // Event Listeners
         menuBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             toggleMenu();
@@ -308,11 +301,8 @@
 
         window.onscroll = () => {
             const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                nav.classList.add('nav-scrolled');
-            } else {
-                nav.classList.remove('nav-scrolled');
-            }
+            if (window.scrollY > 50) nav.classList.add('nav-scrolled');
+            else nav.classList.remove('nav-scrolled');
         };
 
         window.onload = () => {
